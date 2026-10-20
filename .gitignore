@@ -9,3 +9,6 @@
 !/.gitignore
 !/.nojekyll
 !/CNAME
+!/robots.txt
+!/sitemap.xml
+!/404.html
