@@ -1255,6 +1255,32 @@ section[id],
   color: var(--bronze-dark);
 }
 
+.team-directory-more {
+  margin-left: auto;
+  color: var(--bronze-dark);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.team-directory-more::after {
+  content: " →";
+}
+
+.team-directory-row:has(.team-directory-row-input:checked) .team-directory-more {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .team-directory-row:hover .team-directory-more {
+    transform: translateX(4px);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .team-directory-row:hover {
     background-color: rgba(173, 125, 76, 0.05);
@@ -1293,17 +1319,112 @@ section[id],
   pointer-events: auto;
 }
 
+.team-detail-intro {
+  grid-area: 1 / 1;
+  align-self: center;
+  justify-self: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 40px 0;
+
+  transition: opacity 0.4s ease, transform 0.6s ease;
+}
+
+.team-detail-intro img {
+  width: clamp(110px, 12vw, 170px);
+  height: auto;
+  opacity: 0.85;
+}
+
+.team-detail-intro span {
+  color: var(--bronze-dark);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
 @supports selector(:has(*)) {
   .team-detail-panel[data-panel="1"] {
     opacity: 0;
     pointer-events: none;
   }
 
+  .team-detail-intro {
+    display: flex;
+  }
+
+  .team-directory:has(.team-directory-row-input:checked) .team-detail-intro {
+    opacity: 0;
+    transform: scale(0.94);
+    pointer-events: none;
+  }
+
+  /* Al sumar integrantes: agregar acá su par #team-tab-N / data-panel="N" */
   .team-directory:has(#team-tab-1:checked) .team-detail-panel[data-panel="1"],
   .team-directory:has(#team-tab-2:checked) .team-detail-panel[data-panel="2"] {
     opacity: 1;
     pointer-events: auto;
   }
+
+  /* Entrada del perfil: la foto se descubre de abajo hacia arriba, la línea
+     se dibuja y el texto pasa de desenfocado a nítido, en cascada. */
+  .team-detail-panel .team-detail-photo {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.3s ease;
+  }
+
+  .team-detail-panel .team-detail-photo img {
+    transform: scale(1.12);
+    transition: transform 0.3s ease;
+  }
+
+  .team-detail-panel .team-detail-divider {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+
+  .team-detail-panel .team-detail-copy > * {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(14px);
+    transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+  }
+
+  .team-directory:has(#team-tab-1:checked) .team-detail-panel[data-panel="1"] .team-detail-photo,
+  .team-directory:has(#team-tab-2:checked) .team-detail-panel[data-panel="2"] .team-detail-photo {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.95s cubic-bezier(0.7, 0, 0.2, 1) 0.1s;
+  }
+
+  .team-directory:has(#team-tab-1:checked) .team-detail-panel[data-panel="1"] .team-detail-photo img,
+  .team-directory:has(#team-tab-2:checked) .team-detail-panel[data-panel="2"] .team-detail-photo img {
+    transform: scale(1);
+    transition: transform 1.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s;
+  }
+
+  .team-directory:has(#team-tab-1:checked) .team-detail-panel[data-panel="1"] .team-detail-divider,
+  .team-directory:has(#team-tab-2:checked) .team-detail-panel[data-panel="2"] .team-detail-divider {
+    transform: scaleY(1);
+    transition: transform 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.3s;
+  }
+
+  .team-directory:has(#team-tab-1:checked) .team-detail-panel[data-panel="1"] .team-detail-copy > *,
+  .team-directory:has(#team-tab-2:checked) .team-detail-panel[data-panel="2"] .team-detail-copy > * {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+    transition: opacity 0.7s ease, filter 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(0.45s + var(--i, 0) * 0.09s);
+  }
+
+  .team-detail-copy > :nth-child(2) { --i: 1; }
+  .team-detail-copy > :nth-child(3) { --i: 2; }
+  .team-detail-copy > :nth-child(4) { --i: 3; }
+  .team-detail-copy > :nth-child(5) { --i: 4; }
 }
 
 .team-detail-photo {
@@ -1423,7 +1544,13 @@ section[id],
   .team-detail-panel {
     grid-template-columns: 1fr;
     justify-items: start;
+    align-content: start;
     gap: 20px;
+  }
+
+  .team-detail-intro {
+    align-self: start;
+    padding: 56px 0 40px;
   }
 
   .team-detail-divider {
