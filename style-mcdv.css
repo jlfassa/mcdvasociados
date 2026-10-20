@@ -1918,6 +1918,10 @@ section[id],
     right: 18px;
     bottom: 18px;
   }
+
+  .footer-bottom {
+    padding-bottom: 96px;
+  }
 }
 
 @media (max-width: 480px) {
