@@ -1,0 +1,11 @@
+# Solo se publica el sitio: todo lo demás queda local
+/*
+!/index.html
+!/style-mcdv.css
+!/script.js
+!/areas/
+!/img/
+!/video/
+!/.gitignore
+!/.nojekyll
+!/CNAME
