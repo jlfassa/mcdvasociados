@@ -1357,6 +1357,44 @@ section[id],
   line-height: 1.65;
 }
 
+.team-detail-copy .team-specialty {
+  margin-top: 10px;
+}
+
+.team-detail-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team-detail-list li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--charcoal);
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.team-detail-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 7px;
+  height: 1px;
+  background: var(--bronze-dark);
+}
+
+@media (max-width: 480px) {
+  .team-detail-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 .team-detail-copy .team-link {
   display: inline-block;
   margin-top: 4px;
