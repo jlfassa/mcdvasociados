@@ -336,3 +336,16 @@ if (reducedMotion.matches) {
   if (hasGsap) gsap.globalTimeline.pause(0);
   document.documentElement.style.scrollBehavior = "auto";
 }
+
+(function(){
+  var hover=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  document.querySelectorAll('.perfil').forEach(function(p){
+    var b=p.querySelector('.perfil-fila'), t;
+    function set(v){p.classList.toggle('abierto',v);b.setAttribute('aria-expanded',v);}
+    b.addEventListener('click',function(){var v=!p.classList.contains('abierto');set(v);p.dataset.fijo=v?'1':'';});
+    if(hover){
+      p.addEventListener('mouseenter',function(){clearTimeout(t);set(true);});
+      p.addEventListener('mouseleave',function(){if(!p.dataset.fijo)t=setTimeout(function(){set(false);},180);});
+    }
+  });
+})();
